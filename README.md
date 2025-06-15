@@ -1,6 +1,7 @@
 # Travel-APP-SAP-Project
 
-! img/travel_app11.png
+![Travel App Übersicht](img/Travel_app11.png)
+
 
 ## Kurze Projektbeschreibung
 Dieses Projekt demonstriert die Umsetzung einer Business-Anwendung im SAP ABAP Cloud Umfeld auf Basis des ABAP RESTful Application Programming Model (RAP).
@@ -18,7 +19,7 @@ Access Control (CDS Rollen)
 Testdaten-Generierung: Automatisierte Befüllung von Beispiel-Daten
 
 ## Projektstruktur & Architektur
-/Authorizations
+<pre> <code> /Authorizations
   /Authorization Default (TADIR)
     ├─ AD32B098FXXXXX0916CCBBDE710HT
     ├─ B870D00AXXXXXXXX1C52A68700DHT
@@ -37,16 +38,16 @@ Testdaten-Generierung: Automatisierte Befüllung von Beispiel-Daten
 /Core Data Services
   /Access Controls
     ├─ ZC_PET_TRAVEL_1
-    ├─ ZI_PET_TRAV_DEF    
-  /Behavior Definitions 
+    ├─ ZI_PET_TRAV_DEF
+  /Behavior Definitions
     ├─ ZC_PET_TRAVEL_1
-    ├─ ZI_PET_TRAV_DEF    
+    ├─ ZI_PET_TRAV_DEF
   /Data Definitions
     ├─ ZC_PET_BOOK_1
     ├─ ZC_PET_TRAVEL_1
     ├─ ZI_PET_BOOK_DEF
     ├─ ZI_PET_TRAV_DEF
-  /Metadata Extensions
+/Metadata Extensions
     ├─ ZC_PET_BOOK_1
     ├─ ZC_PET_TRAVEL_1
 /Dictionary
@@ -82,8 +83,8 @@ Testdaten-Generierung: Automatisierte Befüllung von Beispiel-Daten
   /Message Classes
     ├─ ZPET_MSG_001
 /img
-  ├─ Screenshots
-
+    ├─ Screenshots
+ </code> </pre>
 
 ## Funktionsumfang
 Anlegen, Anzeigen, Bearbeiten und Löschen von Reisen (Travel) und Buchungen (Booking) im Fiori Elements UI
