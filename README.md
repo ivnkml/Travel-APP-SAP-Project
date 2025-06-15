@@ -19,7 +19,8 @@ Access Control (CDS Rollen)
 Testdaten-Generierung: Automatisierte Befüllung von Beispiel-Daten
 
 ## Projektstruktur & Architektur
-<pre> <code> /Authorizations
+<pre> <code> 
+/Authorizations
   /Authorization Default (TADIR)
     ├─ AD32B098FXXXXX0916CCBBDE710HT
     ├─ B870D00AXXXXXXXX1C52A68700DHT
