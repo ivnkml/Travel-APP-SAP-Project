@@ -1,0 +1,12 @@
+@EndUserText.label: 'Access control for ZC_PET_TRAVEL_1'
+@MappingRole: true
+define role ZC_PET_TRAVEL_1 {
+    // Zugriff auf die Entität ZC_PET_TRAVEL_1 wird gewährt
+    grant
+        select
+            on
+                ZC_PET_TRAVEL_1
+                    // Berechtigungsbedingungen werden von der Entität ZI_PET_TRAV_DEF übernommen
+                    where
+                        inheriting conditions from entity ZI_PET_TRAV_DEF;
+}

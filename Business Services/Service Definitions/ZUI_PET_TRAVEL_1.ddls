@@ -1,0 +1,13 @@
+@EndUserText.label: 'Serv Definition for Travel App'
+define service ZUI_PET_TRAVEL_1 {
+  expose ZC_PET_TRAVEL_1   as Travel;        // Haupt-Entity für Reisen wird als "Travel" im Service verfügbar gemacht
+  expose ZC_PET_BOOK_1     as Booking;       // Buchungsdaten werden als "Booking" zur Verfügung gestellt
+  expose /DMO/I_Agency     as Agency;        // Standard-Datenmodelle (z.B. aus DMO) werden ebenfalls publiziert
+  expose /DMO/I_Customer   as Customer;
+  expose /DMO/I_Flight     as Flight;
+  expose /DMO/I_Carrier    as Carrier;
+  expose /DMO/I_Connection as Connection;
+  expose /DMO/I_Airport    as Airport;
+  expose I_Currency        as Currency;      // Allgemeine Stammdaten (z.B. Währung, Land)
+  expose I_Country         as country;
+}

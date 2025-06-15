@@ -1,0 +1,29 @@
+projection;
+//strict ( 2 ); //Diese Zeile aktivieren, um den strikten Modus 2 einzuschalten. Empfohlen für zukünftige Kompatibilität und Freigabe von Business Objects.
+use draft; // Ermöglicht Entwurfsfunktionalität (z.B. Zwischenspeichern von Änderungen).
+
+// Verhaltensdefinition für das Hauptobjekt "Travel"
+define behavior for ZC_PET_TRAVEL_1 alias Travel
+//use etag
+{
+  use create;   // Neue Reisen können angelegt werden
+  use update;   // Änderungen an bestehenden Reisen erlaubt
+  use delete;   // Reisen können gelöscht werden
+
+  use association _Booking { create; with draft; }
+  // Über die Assoziation zu "Booking" können Buchungen im Entwurfsmodus erstellt werden
+
+  use action acceptTravel; // Benutzerdefinierte Aktion zum Akzeptieren einer Reise
+  use action rejectTravel; // Benutzerdefinierte Aktion zum Ablehnen einer Reise
+}
+
+// Verhaltensdefinition für Buchungen ("Booking")
+define behavior for ZC_PET_BOOK_1 alias Booking
+//use etag
+{
+  use update; // Änderungen an Buchungen erlaubt
+  use delete; // Buchungen können gelöscht werden
+
+  use association _Travel { with draft; }
+  // Verbindung zurück zu "Travel" im Entwurfsmodus
+}

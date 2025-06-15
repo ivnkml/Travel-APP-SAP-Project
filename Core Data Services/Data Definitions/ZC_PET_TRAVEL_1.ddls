@@ -1,0 +1,53 @@
+@EndUserText.label: 'Travel BO projection view'
+@AccessControl.authorizationCheck: #CHECK  // Autorisierungsprüfung für diese Sicht aktiv
+@Search.searchable: true                   // Sicht ist durchsuchbar im UI
+@Metadata.allowExtensions: true            // Custom Fields/Extensions erlaubt
+
+define root view entity ZC_PET_TRAVEL_1
+  as projection on ZI_PET_TRAV_DEF as Travel
+{
+   key TravelUUID,   // Technischer Schlüssel für Reise
+
+       @Search.defaultSearchElement: true
+       TravelID,     // Lesbarer Bezeichner, als Suchfeld
+
+       // Value Help für Reiseagentur, Anzeige des Agenturnamens
+       @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_Agency', element: 'AgencyID'} }]
+       @ObjectModel.text.element: ['AgencyName']
+       @Search.defaultSearchElement: true
+       AgencyID,
+       _Agency.Name       as AgencyName, // Klartextname der Agentur
+
+       // Value Help für Kunde, Anzeige des Kundennamens
+       @Consumption.valueHelpDefinition: [{ entity: { name: '/DMO/I_Customer', element: 'CustomerID'} }]
+       @ObjectModel.text.element: ['CustomerName']
+       @Search.defaultSearchElement: true
+       CustomerID,
+       _Customer.LastName as CustomerName, // Klartextname des Kunden
+
+       BeginDate,   // Reisebeginn
+       EndDate,     // Reiseende
+
+       // Buchungsgebühr, mit Währungsreferenz
+       @Semantics.amount.currencyCode: 'CurrencyCode'
+       BookingFee,
+
+       // Gesamtpreis, mit Währungsreferenz
+       @Semantics.amount.currencyCode: 'CurrencyCode'
+       TotalPrice,
+
+       // Value Help für Währung
+       @Consumption.valueHelpDefinition: [{ entity: { name: 'I_Currency', element: 'Currency'} }]
+       CurrencyCode,
+
+       Description,       // Beschreibung der Reise
+       TravelStatus,      // Status (z.B. gebucht, storniert)
+       LastChangedAt,     // Zeitpunkt der letzten Änderung
+       LocalLastChangedAt,// Lokale Änderungszeit
+
+       /* Associations */
+       _Agency,      // Beziehung zur Agentur
+       _Booking : redirected to composition child ZC_PET_BOOK_1, // Verknüpfung zu untergeordneten Buchungen
+       _Currency,    // Beziehung zur Währung
+       _Customer     // Beziehung zum Kunden
+}

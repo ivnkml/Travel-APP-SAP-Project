@@ -1,0 +1,46 @@
+@AccessControl.authorizationCheck: #CHECK // Autorisierungsprüfung für diese Sicht aktiv
+@EndUserText.label: 'Booking BO view'
+define view entity ZI_PET_BOOK_DEF
+  as select from zpet_bookdat as Booking
+
+  // Beziehungen zu übergeordneten und referenzierten Stammdaten (Parent, Kunde, Flug etc.)
+  association to parent ZI_PET_TRAV_DEF        as _Travel     on  $projection.TravelUUID = _Travel.TravelUUID
+
+  association [1..1] to /DMO/I_Customer        as _Customer   on  $projection.CustomerID   = _Customer.CustomerID
+  association [1..1] to /DMO/I_Carrier         as _Carrier    on  $projection.CarrierID    = _Carrier.AirlineID
+  association [1..1] to /DMO/I_Connection      as _Connection on  $projection.CarrierID    = _Connection.AirlineID
+                                                               and $projection.ConnectionID = _Connection.ConnectionID
+  association [1..1] to /DMO/I_Flight          as _Flight     on  $projection.CarrierID    = _Flight.AirlineID
+                                                               and $projection.ConnectionID = _Flight.ConnectionID
+                                                               and $projection.FlightDate   = _Flight.FlightDate
+  association [0..1] to I_Currency             as _Currency   on $projection.CurrencyCode    = _Currency.Currency    
+{
+   key booking_uuid          as BookingUUID,  // Technischer Schlüssel der Buchung
+       travel_uuid           as TravelUUID,   // Referenz zur Reise
+       booking_id            as BookingID,    // Lesbare Buchungsnummer
+       booking_date          as BookingDate,  // Datum der Buchung
+       customer_id           as CustomerID,   // Kunde
+       carrier_id            as CarrierID,    // Fluggesellschaft
+       connection_id         as ConnectionID, // Flugverbindung
+       flight_date           as FlightDate,   // Datum des Fluges
+
+       @Semantics.amount.currencyCode: 'CurrencyCode'
+       flight_price          as FlightPrice,  // Preis des Fluges (mit Währung)
+
+       currency_code         as CurrencyCode, // Währung
+
+       @Semantics.user.createdBy: true
+       created_by            as CreatedBy,    // Ersteller
+       @Semantics.user.lastChangedBy: true
+       last_changed_by       as LastChangedBy,// Letzter Bearbeiter
+       @Semantics.systemDateTime.localInstanceLastChangedAt: true
+       local_last_changed_at as LocalLastChangedAt, // Zeitpunkt der letzten Änderung
+
+       /* associations */
+       _Travel,    // Beziehung zur übergeordneten Reise
+       _Customer,  // Beziehung zum Kunden
+       _Carrier,   // Beziehung zur Fluggesellschaft
+       _Connection,// Beziehung zur Flugverbindung
+       _Flight,    // Beziehung zum Flug
+       _Currency   // Beziehung zur Währung
+}

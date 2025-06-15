@@ -1,0 +1,19 @@
+@EndUserText.label: 'Access control for ZI_PET_TRAV_DEF'
+@MappingRole: true
+define role ZI_PET_TRAV_DEF {
+    // Zugriff auf die Entität ZI_PET_TRAV_DEF wird gewährt
+    grant
+        select
+            on
+                ZI_PET_TRAV_DEF
+                    where
+                        // Nur Datensätze mit Währung 'EUR' sind erlaubt
+                        CurrencyCode = 'EUR'
+                        and
+                        // Zugriff nur, wenn die Berechtigung für den Reise-Status über PFCG vorliegt (Aktivität 03 = Anzeigen)
+                        ( TravelStatus ) = aspect pfcg_auth( ZOSTAT0001, ZOSTAT0001, ACTVT = '03' )
+                        // Alternative: Zugriff wird immer erlaubt, falls keine Bedingungen greifen (or true)
+                        or
+                        true
+                        ;
+}
